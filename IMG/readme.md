@@ -1,1 +1,1 @@
-Aici se gasesc printsreenurile de la tema.
+Aici se gasesc print-screen-urile de la tema.
