@@ -52,7 +52,6 @@ Apare Hello World!
 
 ---
 Am modificat in fisierul simple_flask.py functia post_method a.i. sa afiseze valoarea transmisa, la patrat atat in momentul in care serverutl rt1 primeste requestul cat si cand clientul rt2 a primit raspunsul.
-requestul, valoarea
 
 ```python
 @app.route('/post', methods=['POST'])
