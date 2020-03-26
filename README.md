@@ -75,7 +75,12 @@ Client
 
 4. Urmăriți alte exemple de request-uri pe [HTTPbin](http://httpbin.org/)
 ```
-Am aflat de metodele HTTP, GET, POST, PUT, DELETE si de [PATCH](http://httpbin.org/#/HTTP_Methods/patch_patch)
+Am aflat de metodele:
+- HTTP, GET, POST, PUT, DELETE si de [PATCH](http://httpbin.org/#/HTTP_Methods/patch_patch)
+- Auth GET 
+- Status Code GET, DELETE, PATCH, POST, PUT
+- Cookies GET
+- Redirects GET, DELETE, PATCH, POST, PUT
 ```
 
 ---
