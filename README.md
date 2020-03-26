@@ -31,13 +31,14 @@ Rezolvați:
 ## Exerciții HTTP/S
 1. Cloudflare are un serviciu DoH care ruleaza pe IP-ul [1.1.1.1](https://blog.cloudflare.com/announcing-1111/). Urmăriți [aici documentația](https://developers.cloudflare.com/1.1.1.1/dns-over-https/json-format/) pentru request-uri de tip GET către cloudflare-dns și scrieți o funcție care returnează adresa IP pentru un nume dat ca parametru. Indicații: setați header-ul cu {'accept': 'application/dns-json'}.
 ```python
-import request
-def functie(nume):
-    requests.get(...)
-    return "rezolvare"
-functie('fmi.unibuc.ro')
-```
+import requests
 
+def functie(nume):
+    response = requests.get('https://1.1.1.1/dns-query', params = {'name':nume}, headers = {'accept': 'application/dns-json'})
+    return response.json()['Answer'][0]['data']
+
+print(functie('fmi.unibuc.ro'))
+```
 ---
 
 2. Executati pe containerul `rt1` scriptul 'simple_flask.py' care deserveste API HTTP pentru GET si POST. Daca accesati in browser [http://localhost:8001](http://localhost:8001) ce observati?
