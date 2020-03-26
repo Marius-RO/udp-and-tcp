@@ -218,9 +218,15 @@ daca mers la UDP, aici nu mai e necesar
 ---
 
 4. Într-un alt terminal, în containerul rt2 rulați clientul: `docker-compose exec rt1 bash -c "python3 /elocal/src/tcp_client.py TCP_MESAJ"`
-
+---
 Printscreen cu rezultatul:
-![alt text](https://raw.githubusercontent.com/senisioi/computer-networks/2020/tema2/udp_img.jpg)
+
+Server:
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_4_server_tcp.png)
+
+Client:
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_4_client_tcp.png)
+
 
 ---
 
