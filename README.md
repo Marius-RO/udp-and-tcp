@@ -90,7 +90,6 @@ Am aflat de metodele:
 1. Executați serverul apoi clientul fie într-un container de docker fie pe calculatorul vostru personal: `python3 udp_server.py` și `python3 udp_client.py "mesaj de trimis"`.
 
 ---
-
 Am rulat intr-un container rt1 udp_server.py , iar intr-un alt terminal tot in containerul rt1 am rulat udp_client.py. Am trimis mesajul "Primul mesaj trimis!" de la clientul udp de pe rt1 la serverul udp de pe rt1.
 
 Printscreen cu rezultatul:
@@ -117,6 +116,7 @@ server_address = (adresa, port)
 
 3. Porniți un terminal în directorul capitolul2 și atașați-vă la containerul rt1: `docker-compose exec rt1 bash`. Pe rt1 folositi calea relativă montată în directorul elocal pentru a porni serverul: `python3 /elocal/src/udp_server.py`. 
 
+---
 
 ![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_3_udp.png)
 
@@ -124,7 +124,7 @@ server_address = (adresa, port)
 
 4. Modificați udp_client.py ca el să se conecteze la adresa serverului, nu la 'localhost'. Sfaturi: puteți înlocui localhost cu adresa IP a containerului rt1 sau chiar cu numele 'rt1'.
 
---
+---
 Am modificat adresa din localhost in rt1
 
 ```python
@@ -137,7 +137,8 @@ mesaj = sys.argv[1]
 
 5. Porniți un al doilea terminal în directorul capitolul2 și rulați clientul în containerul rt2 pentru a trimite un mesaj serverului:  `docker-compose exec rt2 bash -c "python3 /elocal/src/udp_client.py salut"`
 
-Am trimis mesajul "Salut din exterior de la rt2!" folosind clientul udp_client.py modificat pt a trimite mesaje spre adresa rt1, catre serverul udp_server.py care a rula pe rt1 ce primeste mesaje de oriunde avand adresa 0.0.0.0
+--- 
+Am trimis mesajul "Salut din exterior de la rt2!" de la clientul udp_client.py din rt2 modificat pt a trimite mesaje spre adresa rt1, catre serverul udp_server.py de pe rt1 ce primeste mesaje de oriunde avand adresa 0.0.0.0 .
 
 Printscreen cu rezultatul:
 
@@ -149,6 +150,7 @@ Client
 
 6. Deschideți un al treilea terminal și atașați-vă containerului rt1: `docker-compose exec rt1 bash`. Utilizați `tcpdump -nvvX -i any udp port 10000` pentru a scana mesajele UDP care circulă pe portul 10000. Apoi apelați clientul pentru a genera trafic.
 
+---
 Am trimis mesajul "Mesaj trimis de rt2 pentru a genera trafic pentru tcpdump" folosind aceleasi setari ca la punctul 5. 
 
 Rezultat tcpdump:
