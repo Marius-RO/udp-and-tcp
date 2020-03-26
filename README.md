@@ -89,46 +89,70 @@ Am aflat de metodele:
 ## Exerciții UDP
 1. Executați serverul apoi clientul fie într-un container de docker fie pe calculatorul vostru personal: `python3 udp_server.py` și `python3 udp_client.py "mesaj de trimis"`.
 
-Printscreen cu rezultatul:
-![alt text](https://raw.githubusercontent.com/senisioi/computer-networks/2020/tema2/udp_img.jpg)
+---
 
+Am rulat intr-un container rt1 udp_server.py , iar intr-un alt terminal tot in containerul rt1 am rulat udp_client.py. Am trimis mesajul "Primul mesaj trimis!" de la clientul udp de pe rt1 la serverul udp de pe rt1.
+
+Printscreen cu rezultatul:
+
+Server
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_1_rt1_server_udp.png)
+
+Client
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_1_rt1_client_udp.png)
 ---
 
 2. Modificați adresa de pornire a serverului din 'localhost' în IP-ul rezervat descris mai sus cu scopul de a permite serverului să comunice pe rețea cu containere din exterior. 
+
+----
+Am modificat adresa din localhost in 0.0.0.0
+
 ```python
 port = 10000
-adresa = 'lololo'
+adresa = '0.0.0.0'
 server_address = (adresa, port)
 ```
 
 ---
 
 3. Porniți un terminal în directorul capitolul2 și atașați-vă la containerul rt1: `docker-compose exec rt1 bash`. Pe rt1 folositi calea relativă montată în directorul elocal pentru a porni serverul: `python3 /elocal/src/udp_server.py`. 
-```
-root@11771184abbd:/# python3 /elocal/src/udp_server.py     
-[LINE:13]# INFO     [2020-03-13 19:19:13,671]  Serverul a pornit pe localhost si portnul portul 10000
-[LINE:16]# INFO     [2020-03-13 19:19:13,671]  Asteptam mesaje...
-```
+
+
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_3_udp.png)
 
 ---
 
 4. Modificați udp_client.py ca el să se conecteze la adresa serverului, nu la 'localhost'. Sfaturi: puteți înlocui localhost cu adresa IP a containerului rt1 sau chiar cu numele 'rt1'.
+
+--
+Am modificat adresa din localhost in rt1
+
 ```python
-# ceva exemplu de cod unde modific adresa
+port = 10000
+adresa = 'rt1' 
+server_address = (adresa, port)
+mesaj = sys.argv[1]
 ```
 ---
 
 5. Porniți un al doilea terminal în directorul capitolul2 și rulați clientul în containerul rt2 pentru a trimite un mesaj serverului:  `docker-compose exec rt2 bash -c "python3 /elocal/src/udp_client.py salut"`
-```python
-# daca am facut totul corect inainte, aici nu am ce sa arat
-```
----
+
+Am trimis mesajul "Salut din exterior de la rt2!" folosind clientul udp_client.py modificat pt a trimite mesaje spre adresa rt1, catre serverul udp_server.py care a rula pe rt1 ce primeste mesaje de oriunde avand adresa 0.0.0.0
+
+Printscreen cu rezultatul:
+
+Server
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_5_rt1_server_udp.png)
+
+Client
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_5_rt2_client_udp.png)
 
 6. Deschideți un al treilea terminal și atașați-vă containerului rt1: `docker-compose exec rt1 bash`. Utilizați `tcpdump -nvvX -i any udp port 10000` pentru a scana mesajele UDP care circulă pe portul 10000. Apoi apelați clientul pentru a genera trafic.
-```
-pun aici cu copy paste output din tcpdump
-```
 
+Am trimis mesajul "Mesaj trimis de rt2 pentru a genera trafic pentru tcpdump" folosind aceleasi setari ca la punctul 5. 
+
+Rezultat tcpdump:
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_6_tcpdump_udp.png)
 ---
 
 7. Containerul rt1 este definit în [docker-compose.yml](https://github.com/senisioi/computer-networks/blob/2020/capitolul2/docker-compose.yml) cu redirecționare pentru portul 8001. Modificați serverul și clientul în așa fel încât să îl puteți executa pe containerul rt1 și să puteți să vă conectați la el de pe calculatorul vostru sau de pe rețeaua pe care se află calculatorul vostru.
