@@ -158,9 +158,39 @@ Rezultat tcpdump:
 ---
 
 7. Containerul rt1 este definit în [docker-compose.yml](https://github.com/senisioi/computer-networks/blob/2020/capitolul2/docker-compose.yml) cu redirecționare pentru portul 8001. Modificați serverul și clientul în așa fel încât să îl puteți executa pe containerul rt1 și să puteți să vă conectați la el de pe calculatorul vostru sau de pe rețeaua pe care se află calculatorul vostru.
+
+---
+Am adaugat in fisierul docker-compose.yml  "8002:8002/udp"  a.i. sa pot porni serverul udp pe portul 8002.
+
+```yml
+ports:
+         - "8001:8001"
+         - "8002:8002/udp"
 ```
-pun aici cu copy paste output din tcpdump
+Rezultat:
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_7_porturi_udp.png)
+
+Am modificat in udp_server.py si udp_client.py portul si adresa astfel:
+
+```python
+#udp_server.py
+port = 8002
+adresa = '172.9.0.2' #este interfata eth0 a containerului rt1
+
+#udp_client.py
+port = 8002
+adresa = '172.9.0.2'
 ```
+Printscreen cu rezultatul:
+
+Server (containerul rt1):
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_7_server_udp.png)
+
+Client (rulat direct de pe calculator fara a folosi un container):
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_7_client_udp.png)
+
+tcpdump
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_7_tcpdump_udp.png)
 ---
 
 
