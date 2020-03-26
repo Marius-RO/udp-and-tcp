@@ -43,8 +43,9 @@ print(functie('fmi.unibuc.ro'))
 
 2. Executati pe containerul `rt1` scriptul 'simple_flask.py' care deserveste API HTTP pentru GET si POST. Daca accesati in browser [http://localhost:8001](http://localhost:8001) ce observati?
 ```
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_2_http.jpeg)
+Apare Hello World!
 ```
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_2_http.jpeg)
 ---
 
 3. Conectați-vă la containerul `docker-compose exec rt2 bash`. Testati conexiunea catre API-ul care ruleaza pe rt1 folosind curl: `curl -X POST http://rt1:8001/post  -d '{"value": 10}' -H 'Content-Type: application/json'`. Scrieti o metoda POST care ridică la pătrat un numărul definit în `value`. Apelați-o din cod folosind python requests.
