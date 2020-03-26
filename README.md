@@ -49,13 +49,21 @@ Apare Hello World!
 ---
 
 3. Conectați-vă la containerul `docker-compose exec rt2 bash`. Testati conexiunea catre API-ul care ruleaza pe rt1 folosind curl: `curl -X POST http://rt1:8001/post  -d '{"value": 10}' -H 'Content-Type: application/json'`. Scrieti o metoda POST care ridică la pătrat un numărul definit în `value`. Apelați-o din cod folosind python requests.
-```python
-import requests
-url = 'http://rt1:8001/post'
-headers = {}
-data = {}
-requests.post(url, ...)
 ```
+Am modificat in fisierul simple_flask.py functia post_method a.i. sa afiseze valoarea transmisa, la patrat atat in momentul in care serverutl rt1 primeste requestul cat si cand clientul rt2 a primit raspunsul.
+requestul, valoarea 
+python
+@app.route('/post', methods=['POST'])
+def post_method():
+    print("Got from user: ", request.get_json())
+    val = request.get_json()['value']
+    print(val * val)
+    return jsonify({'got_it': 'yes'},{'value received':val * val})
+
+```
+
+PS cu apelurile din terminal:
+
 
 ---
 
