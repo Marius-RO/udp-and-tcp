@@ -43,7 +43,7 @@ print(functie('fmi.unibuc.ro'))
 
 2. Executati pe containerul `rt1` scriptul 'simple_flask.py' care deserveste API HTTP pentru GET si POST. Daca accesati in browser [http://localhost:8001](http://localhost:8001) ce observati?
 ```
-Apare in browser ceva interesant
+![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_2_http.jpeg)
 ```
 ---
 
