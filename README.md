@@ -239,7 +239,7 @@ Output tcpdump:
 
 Explicatii:
 
-Am modificat servereul si clientul astfel:
+Am modificat serverul si clientul astfel:
 ```python
 #tcp_server.py
 #-------
@@ -267,7 +267,9 @@ TS val 460414540 ecr 0,nop,wscale 7], length 0
 
  - Clientul 172.9.0.253668 trimite o cerere de sincronizare serverului  172.9.0.1.8001, utilizand
    flagul [S] ce reprezinta o cerere de sincronizare, un sequence number generat aleator ( in cazul
-   acesta seq 355326867), si payload 0 ( nu s-a trimis nici un byte --> lenght este 0).
+   acesta seq 355326867), si lenght 0 ( mesajul contine doar header, fara payload).
+ - options [mss 1460,sackOK,TS val 460414540 ecr 0,nop,wscale 7] sunt optiuni specifice pentru TCP,
+ iar win 64240 este Window Size inițial.
 
 
 
@@ -277,15 +279,15 @@ IP 172.9.0.1.8001 > 172.9.0.2.53668: Flags [S.], seq 3908688662, ack 355326868, 
     - Serverul raspunde clientului prin intermediul unui mesaj trimis acestuia ce are flagul [S.] 
     (cerere de sincronizare primita), ack 355326868 (seq number trimis de client anterior + 1), 
      seq 3908688662 (la randul lui serverul trimite si el un numar generat aleator, pentru finalizarea
-     3-way handshake-ului), lenght 0 (payloadul este 0 deoarece nu s-a trimis nici un byte)
+     3-way handshake-ului), lenght 0 (payloadul este 0, mesajul are numai header)
 
 
 
 IP 172.9.0.2.53668 > 172.9.0.1.8001: Flags [.], ack 3908688663, win 502, options [nop,nop,TS val 460414540
 ecr 476281348], length 0
 
-    - Finalizarea 3-way handshake-ului unde clientul raspunde cu un mesaj ce contine flagul [.] (mesaj primit),
-    ack 3908688663 (confirma ca a primit seq number generat de server si trimite valoarea acestuia + 1),
+    - Finalizarea 3-way handshake-ului unde clientul raspunde cu un mesaj ce contine flagul [.] (confirmare ca sincronizarea
+    s-a efectuat), ack 3908688663 (confirma ca a primit seq number generat de server si trimite valoarea acestuia + 1),
     lenght 0 (la fel ca mai sus). Fiind doar o confirmare acest mesaj nu are seq number generat de server.
 
 
@@ -295,9 +297,9 @@ IP 172.9.0.2.53668 > 172.9.0.1.8001: Flags [P.], seq 355326868:355326869, ack 39
 options [nop,nop,TS val 460417544 ecr 476281348], length 1
 
     - Clientul trimite un mesaj serverului ce contine flagul [P.] (push , deci acum trimite payload), 
-    seq 355326868:355326869 ( a trimis x byte un x = 355326869 -  355326868, in cazul de fata x fiind 1),
-    ack 3908688663 ( pana ce serverul nu va trimite si el payload clientul va confirma numai cu  acest numar),
-    lenght 1 (payloadul este 1, iar in acest caz a fost trimis 1 singur byte de la client la server)
+    seq 355326868:355326869 ( a trimis x byte unde x = 355326869 -  355326868, in cazul de fata x fiind 1),
+    ack 3908688663 ( pana ce serverul nu va trimite si el payload clientul va confirma numai cu acest numar),
+    lenght 1 (payloadul este 1, iar in acest caz a fost trimis 1 singur byte de la client la server + headerul)
     
     
     
@@ -306,36 +308,40 @@ ecr 460417544], length 0
 
      - Serverul confirma ca a primit mesajul trimis de client printr-un mesaj cu flagul [.] (mesaj primit), 
      ack 355326869 (se continua de la seq numarul la care a ramas clientul + 1), lenght 0 ( acest mesaj este
-     doar o confirmare el neavand payload si nici seq number)
+     doar o confirmare el avand doar header). De data aceasta fiind doar o confirmare el nu are nici seq number.
      
 
 
-Partea de trimitere a mesajului:
---------------------------------
+Partea de finalizare a conexiunii:
+----------------------------------
 IP 172.9.0.1.8001 > 172.9.0.2.53668: Flags [F.], seq 3908688663, ack 355326869, win 510, options [nop,nop,TS
 val 476284353 ecr 460417544], length 0
 
     - Dupa ce primeste mesajul, serverul solicita incheierea conexiunii trimitand un mesaj cu 
-    flagul [F.] (cerere de finalizare), cu seq 3908688663, ack 355326869 si lenght 0. 
+    flagul [F.] (cerere de finalizare), cu seq 3908688663, ack 355326869 si lenght 0. Seq number si ack number au
+    acelasi rol ca mai sus.
 
 
 
 IP 172.9.0.2.53668 > 172.9.0.1.8001: Flags [F.], seq 355326869, ack 3908688664, win 502,
 options [nop,nop,TS val 460417546 ecr 476284353], length 0
-    - Clientul raspunde la solicitarea serverului tot cu in mesaj pentru incheierea conexiunii
-    trimitand un mesaj cu flagul [F.] (cerere de finalizare) cu seq 355326869, ack 3908688664 si lenght 0.
+    - Clientul raspunde la solicitarea serverului tot cu un mesaj pentru incheierea conexiunii
+    trimitand si el un mesaj cu flagul [F.] (cerere de finalizare) cu seq 355326869, ack 3908688664 si lenght 0.
+    Seq number si ack number au acelasi rol ca mai sus.
 
 
 
 IP 172.9.0.1.8001 > 172.9.0.2.53668: Flags [.], ack 355326870, win 510, 
 options [nop,nop,TS val 476284354 ecr 460417546], length 0
     - Mesajul final de confirmare de la server catre client prin care se transmite ca cererea
-    anterioara ( in acest caz cererea de finalizare ) a fost indeplinita. 
+    anterioara ( in acest caz cererea de finalizare ) a fost indeplinita. Fiind doar o confirmare mesajul
+    nu are seq number (aici oricum nu ar trebui sa aiba deoarece conexiunea s-a incheiat in acest moment, 
+    deci nu ar mai fi putut primi inapoi un mesaj cu ack seq number + 1).
 
 
 
 Partea cu flagul [R] (reset) nu a fost capturata deoarece dupa ce conexiunea s-a incheiat clientul
-nu a mai incercat sa trimita un alt mesaj serverului. Totusi, daca s-ar fi incercat ar fi primit un mesaj 
+nu a mai incercat sa trimita un alt mesaj serverului. Totusi, daca ar fi incercat ar fi primit un mesaj 
 in care se specifica resetarea conexiunii din partea serverului.
 ```
 
