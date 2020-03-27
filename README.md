@@ -288,7 +288,7 @@ ecr 476281348], length 0
 
     - Finalizarea 3-way handshake-ului unde clientul raspunde cu un mesaj ce contine flagul [.] (confirmare ca sincronizarea
     s-a efectuat), ack 3908688663 (confirma ca a primit seq number generat de server si trimite valoarea acestuia + 1),
-    lenght 0 (la fel ca mai sus). Fiind doar o confirmare acest mesaj nu are seq number generat de server.
+    lenght 0 (la fel ca mai sus). Fiind doar o confirmare acest mesaj nu are seq number generat.
 
 
 Partea de trimitere a mesajului:
@@ -325,6 +325,7 @@ val 476284353 ecr 460417544], length 0
 
 IP 172.9.0.2.53668 > 172.9.0.1.8001: Flags [F.], seq 355326869, ack 3908688664, win 502,
 options [nop,nop,TS val 460417546 ecr 476284353], length 0
+
     - Clientul raspunde la solicitarea serverului tot cu un mesaj pentru incheierea conexiunii
     trimitand si el un mesaj cu flagul [F.] (cerere de finalizare) cu seq 355326869, ack 3908688664 si lenght 0.
     Seq number si ack number au acelasi rol ca mai sus.
@@ -333,6 +334,7 @@ options [nop,nop,TS val 460417546 ecr 476284353], length 0
 
 IP 172.9.0.1.8001 > 172.9.0.2.53668: Flags [.], ack 355326870, win 510, 
 options [nop,nop,TS val 476284354 ecr 460417546], length 0
+
     - Mesajul final de confirmare de la server catre client prin care se transmite ca cererea
     anterioara ( in acest caz cererea de finalizare ) a fost indeplinita. Fiind doar o confirmare mesajul
     nu are seq number (aici oricum nu ar trebui sa aiba deoarece conexiunea s-a incheiat in acest moment, 
