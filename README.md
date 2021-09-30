@@ -45,7 +45,7 @@ print(functie('fmi.unibuc.ro'))
 ```
 Apare Hello World!
 ```
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_2_http.jpeg)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_2_http.jpeg)
 ---
 
 3. Conectați-vă la containerul `docker-compose exec rt2 bash`. Testati conexiunea catre API-ul care ruleaza pe rt1 folosind curl: `curl -X POST http://rt1:8001/post  -d '{"value": 10}' -H 'Content-Type: application/json'`. Scrieti o metoda POST care ridică la pătrat un numărul definit în `value`. Apelați-o din cod folosind python requests.
@@ -66,10 +66,10 @@ def post_method():
 PS cu apelurile din terminal:
 
 Server
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_3_rt1_http.jpeg)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_3_rt1_http.jpeg)
 
 Client
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_3_rt2_http.jpeg)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_3_rt2_http.jpeg)
 
 ---
 
@@ -95,10 +95,10 @@ Am rulat intr-un container rt1 udp_server.py , iar intr-un alt terminal tot in c
 Printscreen cu rezultatul:
 
 Server
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_1_rt1_server_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_1_rt1_server_udp.png)
 
 Client
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_1_rt1_client_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_1_rt1_client_udp.png)
 ---
 
 2. Modificați adresa de pornire a serverului din 'localhost' în IP-ul rezervat descris mai sus cu scopul de a permite serverului să comunice pe rețea cu containere din exterior. 
@@ -118,7 +118,7 @@ server_address = (adresa, port)
 
 ---
 
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_3_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_3_udp.png)
 
 ---
 
@@ -143,10 +143,10 @@ Am trimis mesajul "Salut din exterior de la rt2!" de la clientul udp_client.py d
 Printscreen cu rezultatul:
 
 Server
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_5_rt1_server_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_5_rt1_server_udp.png)
 
 Client
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_5_rt2_client_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_5_rt2_client_udp.png)
 
 6. Deschideți un al treilea terminal și atașați-vă containerului rt1: `docker-compose exec rt1 bash`. Utilizați `tcpdump -nvvX -i any udp port 10000` pentru a scana mesajele UDP care circulă pe portul 10000. Apoi apelați clientul pentru a genera trafic.
 
@@ -154,7 +154,7 @@ Client
 Am trimis mesajul "Mesaj trimis de rt2 pentru a genera trafic pentru tcpdump" folosind aceleasi setari ca la punctul 5. 
 
 Rezultat tcpdump:
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_6_tcpdump_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_6_tcpdump_udp.png)
 ---
 
 7. Containerul rt1 este definit în [docker-compose.yml](https://github.com/senisioi/computer-networks/blob/2020/capitolul2/docker-compose.yml) cu redirecționare pentru portul 8001. Modificați serverul și clientul în așa fel încât să îl puteți executa pe containerul rt1 și să puteți să vă conectați la el de pe calculatorul vostru sau de pe rețeaua pe care se află calculatorul vostru.
@@ -168,7 +168,7 @@ ports:
          - "8002:8002/udp"
 ```
 Rezultat:
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_7_porturi_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_7_porturi_udp.png)
 
 Am modificat in udp_server.py si udp_client.py portul si adresa astfel:
 
@@ -184,13 +184,13 @@ adresa = '172.9.0.2'
 Printscreen cu rezultatul:
 
 Server (containerul rt1):
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_7_server_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_7_server_udp.png)
 
 Client (rulat direct de pe calculator fara a folosi un container):
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_7_client_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_7_client_udp.png)
 
 tcpdump
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_7_tcpdump_udp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_7_tcpdump_udp.png)
 ---
 
 
@@ -222,10 +222,10 @@ daca mers la UDP, aici nu mai e necesar
 Printscreen cu rezultatul:
 
 Server:
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_4_server_tcp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_4_server_tcp.png)
 
 Client:
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_4_client_tcp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_4_client_tcp.png)
 
 
 ---
@@ -235,7 +235,7 @@ Client:
 ---
 
 Output tcpdump:
-![alt text](https://github.com/nlp-unibuc/tema-2-Marius-RO/blob/master/IMG/ex_5_tcpdump_tcp.png)
+![alt text](https://github.com/Marius-RO/udp-and-tcp/blob/main/IMG/ex_5_tcpdump_tcp.png)
 
 Explicatii:
 
